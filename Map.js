@@ -14,6 +14,7 @@ import parks from './data';
 import Footer from './Footer';
 import { useNavigation } from '@react-navigation/native';
 import { FullParkNameContext } from './Contexts/ParkNameContext';
+import TokenService from './services/TokenService';
 
 export default function MapUI() {
   const [fullParkName, setFullParkName] = useContext(FullParkNameContext)
@@ -119,14 +120,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#414f47',
     width: "100%",
     justifyContent: "center"
-
 },
 navList: {
     flexDirection: 'row',
     display: 'flex',
     justifyContent: 'space-evenly',  
     alignItems: "center",
-    marginTop: 20    
+    marginTop: 10
 },
 navListItem: {
     marginRight: 5,

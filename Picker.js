@@ -342,23 +342,21 @@ export default function Activities(){
 const styles = StyleSheet.create({
    text: {
       color: "#414f47",
-      fontSize: 20,
+      fontSize: 17,
       fontFamily: "Avenir"
    },
    textChecked: {
       color: "white",
-      fontSize: 20,
+      fontSize: 17,
       fontFamily: "Avenir"
    },
    checked: {
       backgroundColor: "#414f47",
       color: "white",
       padding: 5,
-      width: 175,
       marginBottom: 5,
       borderRadius: 5,
       alignItems: "center",
-      width: 190,
    },
    pickerContainer: {
       marginTop: 10,
@@ -368,21 +366,23 @@ const styles = StyleSheet.create({
       marginTop: 10,
       flexDirection: "row",
       justifyContent: "space-around",
-      backgroundColor: "grey",
+      backgroundColor: "#414f47",
       borderRadius: 10,
+      width: "90%",
+      marginRight: "auto",
+      marginLeft: "auto",
       padding: 2,
    },
    checkboxes: {
       marginTop: 5,
       display: "flex",
-      flexWrap: "wrap",
       flexDirection: "column",
       borderRadius: 20,
    },
    checkbox: {
       backgroundColor: 'white',
       padding: 4,
-      width: 190,
+      width: "100%",
       marginBottom: 5,
       borderRadius: 3,
       alignItems: "center",

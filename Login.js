@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import rogue from './images/rogue.jpeg';
 import { useNavigation } from '@react-navigation/native';
@@ -77,8 +77,10 @@ const handleSubmit = ev => {
         </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={rogue}>
-        <View style={styles.form}>
+        <ScrollView style={styles.form}>
+          <View style={styles.headerBox}>
             <Text style={styles.header}>log in to access user comments or to suggest a park</Text>
+            </View>
             {error !== null && <View style={styles.error}><Text style={styles.errorText}>{error}</Text></View>}
             <View style={styles.labelBox}>
                 <Text style={styles.label}>Username</Text>
@@ -102,7 +104,7 @@ const handleSubmit = ev => {
             <TouchableOpacity activeOpacity={.5} onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>login</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -113,8 +115,8 @@ const handleSubmit = ev => {
 
 const styles = StyleSheet.create({
   labelBox: {
-    width: "20%",
-    marginLeft: 40,
+    width: 110,
+    marginLeft: 30,
     marginRight: "auto",
     backgroundColor: "#414f47cc",
     borderTopLeftRadius: 5,
@@ -180,38 +182,43 @@ const styles = StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
     },
+    headerBox: {
+      backgroundColor: "#414f47cc",
+      marginTop: 30,
+      marginBottom: 50,
+      borderRadius: 5
+  },
     header: {
         fontSize: 22,
-        textAlign: "center",
-        backgroundColor: "rgba(65, 79, 71, 0.8)",
         padding: 20,
-        borderRadius: 5,
-        marginBottom: 50,
-        marginTop: 50,
+        textAlign: "center",
         fontFamily: "Avenir-Medium",
         color: "white"
     },
     form: {
         color: "white",
         paddingTop: 10,
-        paddingBottom: 10,
-        alignItems: "center",
+        paddingBottom: 50,
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "85%",
         height: 250
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
         height: 60,
         borderRadius: 10,
-        width: 350,
+        width: 320,
         paddingLeft: 10,
         fontSize: 20,
         marginBottom: 20,
+        alignSelf: "center",
         fontFamily: "Avenir"
     },
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#414f47"
+        backgroundColor: "#414f47",
       },
     image: {
         flex: 1,

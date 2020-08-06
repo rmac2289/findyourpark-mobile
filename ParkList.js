@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Dimensions, Image } from 'react-native';
 import { ParkNameContext } from './Contexts/ParkNameContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ActivitiesContext } from './Contexts/ActivitiesContext';
@@ -7,7 +7,10 @@ import { FullParkNameContext } from './Contexts/ParkNameContext'
 import { useNavigation } from '@react-navigation/native'
 import { LoginContext } from './Contexts/LoginContext';
 import parks from './data.js';
+import tree from './images/tree.png';
 import Footer from './Footer';
+import MapView, { Marker, Callout } from 'react-native-maps';
+
 
 export default function Parklist(){
     const [parkName, setParkName] = useContext(ParkNameContext)
@@ -54,6 +57,25 @@ export default function Parklist(){
           
         </View>
     });
+    const markersToDisplay = parks.data.filter((v) => {
+        return v.fullName.toLowerCase().includes(parkName.toLowerCase())
+     });
+     const markerList = markersToDisplay.sort(compare).map((v,i) => {
+         return <Marker image={tree} key={i} coordinate={{ latitude: parseFloat(v.latLng[0]), longitude: parseFloat(v.latLng[1]) }}>
+              <Callout onPress={() => {
+                setFullParkName(v.fullName);
+                navigation.navigate('Park');
+              }}style={styles.callout} tooltip={false}>
+                <View style={styles.calloutBox}>
+                    <Text style={styles.calloutHeader}>{v.fullName}</Text>
+                    <Text style={styles.calloutText}>Hours: <Text style={styles.lightText}>{v.hours}</Text></Text>
+                    <View style={styles.imageBox}>
+                    <Image style={{height: 100, width: 150}} source={{uri: v.images[0].url}}/>
+                    </View>
+                </View>
+              </Callout>
+        </Marker>
+    })
 
     return (
         <>
@@ -91,6 +113,41 @@ export default function Parklist(){
         </View>
         </ScrollView>
     </View>
+    <View style={styles.headerBox}>
+        <Text style={styles.header}>Search Results</Text>
+    </View>
+    <View style={styles.mapContainer}>
+            <View style={styles.container}>
+        <MapView
+        style={styles.mapStyle}
+        initialRegion={{
+            latitude: 36.9915,
+            longitude: -119.7889,
+          latitudeDelta: 9,
+          longitudeDelta: 9,
+        }} 
+      >
+          {(activitiesList.length > 0 && parkName === '') && parks.data.sort(compare).filter(checker).map((v,i) => {
+              return <Marker image={tree} key={i} coordinate={{ latitude: parseFloat(v.latLng[0]), longitude: parseFloat(v.latLng[1]) }}>
+              <Callout onPress={() => {
+                setFullParkName(v.fullName);
+                navigation.navigate('Park');
+              }}style={styles.callout} tooltip={false}>
+                <View style={styles.calloutBox}>
+                    <Text style={styles.calloutHeader}>{v.fullName}</Text>
+                    <Text style={styles.calloutText}>Hours: <Text style={styles.lightText}>{v.hours}</Text></Text>
+                    <View style={styles.imageBox}>
+                    <Image style={{height: 100, width: 150}} source={{uri: v.images[0].url}}/>
+                    </View>
+                </View>
+              </Callout>
+        </Marker>
+          })}
+          {parkName !== '' && markerList}
+          
+      </MapView>
+      </View>
+      </View>
         <View style={styles.listBox}>
             {activitiesList.length === 0 || parkList.length === 0 ? <View style={styles.sorry}><Text style={styles.sorryText}>Sorry, no parks match that search!</Text></View>:activities.length > 0 && parkName !== '' ? activitiesList.concat(parkList):activities.length > 0 && parkName === '' ? activitiesList: parkList}
         </View>
@@ -104,6 +161,46 @@ export default function Parklist(){
 
 
 const styles = StyleSheet.create({
+    headerBox: {
+        width: "75%",
+        marginLeft: "auto",
+        marginRight: "auto",
+        borderRadius: 5,
+        backgroundColor: "rgba(255,255,255,0.9)",
+    },
+    header: {
+        color: "#414f47",
+        fontFamily: "Avenir-Medium",
+        textAlign: "center",
+        fontSize: 32
+    },
+    imageBox: {
+        alignItems: "center"
+      },
+      callout: {
+        backgroundColor: "rgba(255,255,255,0.8)",
+        position: "absolute",
+        maxHeight: 600,
+        borderWidth: 3,
+        borderColor: "#414f47",
+        padding: 10,
+        borderRadius: 5
+      },
+      calloutHeader: {
+        color: "#414f47",
+        fontWeight: "800",
+        fontFamily: "Avenir",
+        maxWidth: 200
+      },
+      calloutText: {
+        color: "#414f47",
+        fontWeight: "900",
+        maxWidth: 200,
+        fontFamily: "Avenir"
+      },
+      lightText: {
+        fontWeight: "normal"
+      },
     sorry: {
         width: "95%",
         borderRadius: 5,
@@ -120,6 +217,28 @@ const styles = StyleSheet.create({
     parkListBox: {
         backgroundColor: "#414f47",
     },
+    container: {
+        flex: 1,
+        backgroundColor: "#414f47",
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 5
+      },
+      mapContainer: {
+        borderRadius: 5,
+        marginBottom: 10,
+        width: "95%",
+        backgroundColor: "#414f47",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: 160,
+      },
+      mapStyle: {
+        width: Dimensions.get('window').width - 75,
+        height: 500,
+        borderRadius: 5
+      },
     listBox: {
         width: "95%",
         marginLeft: "auto",

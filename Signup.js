@@ -1,5 +1,6 @@
+
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, Dimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import yosemite from './images/yosemite.jpg';
 import { useNavigation } from '@react-navigation/native';
@@ -71,7 +72,7 @@ export default function Signup(){
         </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={yosemite}>
-        <View style={styles.form}>
+        <ScrollView style={styles.form}>
             <View style={styles.headerBox}>
             <Text style={styles.header}>sign up to access user comments or to suggest a park</Text>
             {error !== null && <Text style={styles.error}>{error}</Text>}
@@ -116,7 +117,7 @@ export default function Signup(){
             <TouchableOpacity onPress={handleSignupSubmit}style={styles.button}>
                 <Text style={styles.buttonText}>sign up</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -126,8 +127,8 @@ export default function Signup(){
 
 const styles = StyleSheet.create({
     labelBox: {
-        width: "20%",
-        marginLeft: 40,
+        width: 110,
+        marginLeft: 30,
         marginRight: "auto",
         backgroundColor: "#414f47cc",
         borderTopLeftRadius: 5,
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     },
     headerBox: {
         backgroundColor: "#414f47cc",
-        marginTop: 50,
+        marginTop: 30,
         marginBottom: 50,
         borderRadius: 5
     },
@@ -200,18 +201,21 @@ const styles = StyleSheet.create({
     form: {
         color: "white",
         paddingTop: 10,
-        paddingBottom: 10,
-        alignItems: "center",
+        paddingBottom: 50,
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "85%",
         height: 250
     },
     searchInput: {
         backgroundColor: 'rgba(255,255,255,0.9)',
         height: 60,
         borderRadius: 10,
-        width: 350,
+        width: 320,
         paddingLeft: 10,
         fontSize: 20,
         marginBottom: 20,
+        alignSelf: "center",
         fontFamily: "Avenir"
     },
     container: {

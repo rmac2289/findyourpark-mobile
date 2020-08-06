@@ -10,7 +10,7 @@ export default function Header(){
     <ImageBackground source={image} style={styles.image}>
     <View style={styles.header}>
         <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>find your park</Text>
+            <Text style={styles.headerText}>Find Your Park</Text>
             <Text style={styles.headerP}>Search for California parks by name or narrow your search
                 by what activities are offered - once you find what you're looking for,
                 check out the park details and comments left by other users. If you've experienced the park
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     header: {
         display: 'flex',
         alignItems: 'center',
-        width: '85%',
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '2%',
@@ -44,14 +44,15 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     headerText: {
-        fontSize: 48,
+        fontSize: 40,
         textAlign: "center",
+        fontWeight: "600",
         marginBottom: 0,
         borderWidth: 2,
         borderColor: '#414f47',
         overflow: 'hidden',
         borderRadius: 10,
-        padding: '2%',
+        padding: '1%',
         marginBottom: 20,
         color: '#414f47',
         backgroundColor: 'rgba(255,255,255,0.8)',

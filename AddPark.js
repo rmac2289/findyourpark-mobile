@@ -65,7 +65,7 @@ export default function AddPark(){
         </TouchableOpacity>
         </View>
     <ImageBackground style={styles.image} source={shasta}>
-        <View style={styles.form}>
+        <ScrollView style={styles.form}>
             <View style={styles.headerBox}>
             <Text style={styles.header}>suggest a park</Text>
             </View>
@@ -103,7 +103,7 @@ export default function AddPark(){
             <TouchableOpacity onPress={handleSuggestionSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>submit</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -114,8 +114,8 @@ export default function AddPark(){
 
 const styles = StyleSheet.create({
     labelBox: {
-        width: "25%",
-        marginLeft: 40,
+        width: 120,
+        marginLeft: 30,
         marginRight: "auto",
         backgroundColor: "#414f47cc",
         borderTopLeftRadius: 5,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     },
     headerBox: {
         backgroundColor: "#414f47cc",
-        marginTop: 80,
+        marginTop: 50,
         marginBottom: 50,
         borderRadius: 5,
         marginBottom: 40
@@ -182,17 +182,20 @@ const styles = StyleSheet.create({
         marginRight: 'auto',
     },
     header: {
-        fontSize: 22,
+        fontSize: 24,
         padding: 15,
         borderRadius: 5,
         fontFamily: "Avenir-Medium",
         color: "white",
+        textAlign: "center"
     },
     form: {
         color: "white",
         paddingTop: 10,
         paddingBottom: 10,
-        alignItems: "center",
+        marginLeft: "auto",
+        textAlign: "center",
+        marginRight: "auto",
         height: 250
     },
     searchInput: {
@@ -218,7 +221,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#414f47"
+        backgroundColor: "#414f47",
+        paddingBottom: 50
       },
     image: {
         flex: 1,

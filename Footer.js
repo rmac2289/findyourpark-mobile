@@ -15,7 +15,7 @@ export default function Footer(){
 
 const styles = StyleSheet.create({
     footer: {
-        height: 45,
+        height: 28,
         backgroundColor: "#414f47",
         position: "absolute",
         bottom: 0,

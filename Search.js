@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     search: {
         display: 'flex',
         alignItems: 'center',
-        width: '85%',
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '2%',
@@ -77,7 +76,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.9)',
         height: 50,
         borderRadius: 10,
-        width: 400,
+        width: 300,
+        marginLeft: "auto",
+        marginRight: "auto",
         paddingLeft: 10,
         fontSize: 20,
         fontFamily: "Avenir"
