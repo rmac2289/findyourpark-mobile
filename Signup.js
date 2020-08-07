@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import yosemite from './images/yosemite.jpg';
 import { useNavigation } from '@react-navigation/native';
@@ -72,7 +72,9 @@ export default function Signup(){
         </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={yosemite}>
-        <ScrollView style={styles.form}>
+    <KeyboardAvoidingView style={styles.keyboardView} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+
+        <ScrollView contentContainerStyle={styles.contentContainer} keyboardDismissMode="on-drag" style={styles.form}>
             <View style={styles.headerBox}>
             <Text style={styles.header}>sign up to access user comments or to suggest a park</Text>
             {error !== null && <Text style={styles.error}>{error}</Text>}
@@ -91,6 +93,7 @@ export default function Signup(){
             </View>
             <TextInput 
             onChangeText={email => setEmail(email)}
+            keyboardType="email-address"
             value={email}
             placeholder="email"
             style={styles.searchInput}
@@ -118,6 +121,7 @@ export default function Signup(){
                 <Text style={styles.buttonText}>sign up</Text>
             </TouchableOpacity>
         </ScrollView>
+        </KeyboardAvoidingView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -126,6 +130,13 @@ export default function Signup(){
 }
 
 const styles = StyleSheet.create({
+    keyboardView: {
+        height: 700
+    },
+    contentContainer: {
+        height: 900,
+        paddingBottom: 150
+    },
     labelBox: {
         width: 110,
         marginLeft: 30,
@@ -170,7 +181,7 @@ const styles = StyleSheet.create({
     },
     headerBox: {
         backgroundColor: "#414f47cc",
-        marginTop: 30,
+        marginTop: 10,
         marginBottom: 50,
         borderRadius: 5
     },

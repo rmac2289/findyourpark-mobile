@@ -32,7 +32,7 @@ const Main = ({ navigation }) => {
     <>
       <ScrollView style={styles.App}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
+      <SafeAreaView keyboardDismissMode="on-drag">
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>

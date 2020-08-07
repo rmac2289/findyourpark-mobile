@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import rogue from './images/rogue.jpeg';
 import { useNavigation } from '@react-navigation/native';
@@ -77,7 +77,8 @@ const handleSubmit = ev => {
         </TouchableOpacity>}
         </View>
     <ImageBackground style={styles.image} source={rogue}>
-        <ScrollView style={styles.form}>
+     <KeyboardAvoidingView style={styles.keyboardView} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+        <ScrollView contentContainerStyle={styles.contentContainer} style={styles.form}>
           <View style={styles.headerBox}>
             <Text style={styles.header}>log in to access user comments or to suggest a park</Text>
             </View>
@@ -105,6 +106,7 @@ const handleSubmit = ev => {
                 <Text style={styles.buttonText}>login</Text>
             </TouchableOpacity>
         </ScrollView>
+        </KeyboardAvoidingView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -114,6 +116,13 @@ const handleSubmit = ev => {
 }
 
 const styles = StyleSheet.create({
+  keyboardView: {
+    height: 700
+},
+contentContainer: {
+    height: 800,
+    paddingBottom: 150
+},
   labelBox: {
     width: 110,
     marginLeft: 30,
@@ -198,7 +207,6 @@ const styles = StyleSheet.create({
     form: {
         color: "white",
         paddingTop: 10,
-        paddingBottom: 50,
         marginLeft: "auto",
         marginRight: "auto",
         width: "85%",
@@ -223,6 +231,6 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         resizeMode: "cover",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
       },
 })

@@ -35,7 +35,9 @@ export default function Parklist(){
     // maps/filters to show parks matching ANY activities
     const activitiesList = parks.data.sort(compare).filter(checker).map((v,i) => {
         return <View key={i + 400}>
-            <TouchableOpacity style={styles.button} to={`/park/${v.fullName}`}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                setFullParkName(v.fullName);
+                return navigation.navigate("Park")}}>
                 <Text style={styles.parkName}>{v.fullName}</Text>
             </TouchableOpacity>
         </View>
