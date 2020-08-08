@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ParkNameContext } from './Contexts/ParkNameContext';
 import { TextContext } from './Contexts/TextContext';
 import Header from './Header';
@@ -20,14 +20,14 @@ import TokenService from './services/TokenService';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Main = ({ navigation }) => {
-  
-  const [loggedIn, setLoggedIn] = useContext(LoginContext)
+  const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useContext(LoginContext);
   const onLogout = () => {
     TokenService.clearAuthToken();
     setLoggedIn(false);
-  }
+  };
   const [parkName, setParkName] = useContext(ParkNameContext);
-  const [text] = useContext(TextContext)
+  const [text] = useContext(TextContext);
   return (
     <>
       <ScrollView style={styles.App}>
@@ -60,10 +60,11 @@ const Main = ({ navigation }) => {
         </View>
     </View>
           <Header />
-          <Search press={() => {
+          <Search 
+          press={() => {
             setParkName(text);
-        return navigation.navigate('Parklist')}
-          }/>
+        return navigation.navigate('Parklist');
+          }}/>
         </ScrollView>
       </SafeAreaView>
       </ScrollView>

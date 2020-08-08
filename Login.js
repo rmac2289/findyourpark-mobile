@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import rogue from './images/rogue.jpeg';
 import { useNavigation } from '@react-navigation/native';
@@ -19,17 +19,21 @@ export default function Login(){
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
     const navigation = useNavigation();
     const [token, setToken] = useContext(TokenContext);
+    const [loading, setLoading] = useState(false);
 
     const onLoginSuccess = async () => {
         setUser(username);
         setLoggedIn(true);
         navigation.navigate('Home');
+        setLoading(false);
         return await AsyncStorage.setItem('username', username);
       };
 
 // Auth verification on login
 const handleSubmit = ev => {
     ev.preventDefault();
+    setLoading(true);
+
     setError(null);
 
     AuthApiService.postLogin({
@@ -102,9 +106,10 @@ const handleSubmit = ev => {
             style={styles.searchInput}
             textContentType="password"
             secureTextEntry={true}/>
+            {loading ? <ActivityIndicator style={styles.indicator} size="large" color="#ffffff"/>:
             <TouchableOpacity activeOpacity={.5} onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>login</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
         </ScrollView>
         </KeyboardAvoidingView>
     </ImageBackground>

@@ -1,6 +1,6 @@
 
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ActivityIndicator, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import yosemite from './images/yosemite.jpg';
 import { useNavigation } from '@react-navigation/native';
@@ -16,12 +16,13 @@ export default function Signup(){
     const [success, setSuccess] = useState(null);
     const [error, setError] = useState(null);
     const [loggedIn, setLoggedIn] = useContext(LoginContext)
-
+    const [loading, setLoading] = useState(false)
     const navigation = useNavigation();
 
  
     // posts user info on signup
     const handleSignupSubmit = () => {
+        setLoading(true);
          setError(null);
          AuthApiService.postUser({
            user_name: username,
@@ -36,6 +37,7 @@ export default function Signup(){
          setPassword('');
          setSuccess(true)
          navigation.navigate('Login');
+        setLoading(false)
      })
        .catch(res => {
          setError( res.error );
@@ -117,9 +119,10 @@ export default function Signup(){
             style={styles.searchInput}
             textContentType="password"
             secureTextEntry={true}/>
+            {loading ? <ActivityIndicator style={styles.indicator} size="large" color="#ffffff"/>:
             <TouchableOpacity onPress={handleSignupSubmit}style={styles.button}>
                 <Text style={styles.buttonText}>sign up</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
         </ScrollView>
         </KeyboardAvoidingView>
     </ImageBackground>
