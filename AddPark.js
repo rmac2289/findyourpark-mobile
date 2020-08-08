@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, View, ImageBackground, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import shasta from './images/Mt_Shasta.jpeg';
 import { useNavigation } from '@react-navigation/native';
@@ -14,20 +14,23 @@ export default function AddPark(){
     const [loggedIn, setLoggedIn] = useContext(LoginContext)
     const [description, setDescription] = useState('');
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(false);
 
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
     // POST park suggestion
     const handleSuggestionSubmit = () => {
+        setLoading(true)
         SuggestionsApiService.postSuggestion(parkName, location, description)
             .catch(error => setError(error.error));
             if (error === null){
-                setSuccess(true)
+                setSuccess(true);
             };
             setLocation('');
             setDescription('');
             setParkName('');
+            setLoading(false)
     };
 
     return (
@@ -65,7 +68,9 @@ export default function AddPark(){
         </TouchableOpacity>
         </View>
     <ImageBackground style={styles.image} source={shasta}>
-        <ScrollView style={styles.form}>
+    <KeyboardAvoidingView style={styles.keyboardView} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+
+        <ScrollView contentContainerStyle={styles.contentContainer} style={styles.form}>
             <View style={styles.headerBox}>
             <Text style={styles.header}>suggest a park</Text>
             </View>
@@ -100,10 +105,13 @@ export default function AddPark(){
             placeholder="description"
             style={styles.description}
             multiline={true}/>
+                    {loading ? <ActivityIndicator style={styles.indicator} size="large" color="#ffffff"/>:
+
             <TouchableOpacity onPress={handleSuggestionSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>submit</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
         </ScrollView>
+        </KeyboardAvoidingView>
     </ImageBackground>
     </View>
     <Footer/>
@@ -113,6 +121,13 @@ export default function AddPark(){
 }
 
 const styles = StyleSheet.create({
+    keyboardView: {
+        height: 700
+    },
+    contentContainer: {
+        height: 900,
+        paddingBottom: 150
+    },
     labelBox: {
         width: 120,
         marginLeft: 30,
@@ -222,7 +237,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         backgroundColor: "#414f47",
-        paddingBottom: 50
       },
     image: {
         flex: 1,
